@@ -58,11 +58,6 @@ public class Sequencial<T> implements Serializable, Linear<T> {
 	}
 
 	@Override
-	public T findElementByPos(int pos) {
-		return this.elementData[pos];
-	}
-
-	@Override
 	public boolean addElement(T element) throws LinearSequencialException {
 		if (element == null)
 			return false;

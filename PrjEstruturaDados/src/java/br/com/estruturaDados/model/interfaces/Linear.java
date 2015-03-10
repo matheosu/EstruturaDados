@@ -27,16 +27,6 @@ public interface Linear<T> {
 	public abstract int findElement(T element) throws LinearException;
 	
 	/**
-	 * Método onde procura quem é o elemento da posição passada por parametro;
-	 * 
-	 * @param pos
-	 *            Posição da lista;
-	 * @return Objeto encontrado, caso não encontrou retorna <tt>null</tt>;
-	 * @author matheuscastro
-	 */
-	public abstract T findElementByPos(int pos);
-
-	/**
 	 * Método que insere na lista um novo elemento passado por parametro;
 	 * 
 	 * @param element
