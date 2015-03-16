@@ -5,6 +5,7 @@ import java.lang.reflect.Array;
 
 import br.com.estruturaDados.model.exception.LinearSequencialException;
 import br.com.estruturaDados.model.interfaces.Linear;
+import br.com.estruturaDados.util.Compare;
 
 public class Sequencial<T> implements Linear<T>, Serializable {
 	private static final long serialVersionUID = 7672934496211625736L;
@@ -185,10 +186,8 @@ public class Sequencial<T> implements Linear<T>, Serializable {
 		switch (this.ordenacao) {
 		case ASC:
 			for (int i = 0; i < this.qtdElements; i++) {
-				String primeiro = this.elementData[i].toString();
 				for (int x = 0; x < this.qtdElements; x++) {
-					String segundo = this.elementData[x].toString();
-					if (primeiro.compareToIgnoreCase(segundo) < 0) {
+					if (Compare.compare(this.elementData[i], this.elementData[x]) < 0) {
 						T aux = this.elementData[i];
 						this.elementData[i] = this.elementData[x];
 						this.elementData[x] = aux;
@@ -199,10 +198,8 @@ public class Sequencial<T> implements Linear<T>, Serializable {
 
 		case DESC:
 			for (int i = 0; i < this.qtdElements; i++) {
-				String primeiro = this.elementData[i].toString();
 				for (int x = 0; x < this.qtdElements; x++) {
-					String segundo = this.elementData[x].toString();
-					if (primeiro.compareToIgnoreCase(segundo) > 0) {
+					if (Compare.compare(this.elementData[i], this.elementData[x]) > 0) {
 						T aux = this.elementData[x];
 						this.elementData[x] = this.elementData[i];
 						this.elementData[i] = aux;

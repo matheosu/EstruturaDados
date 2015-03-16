@@ -9,3 +9,8 @@ package br.com.estruturaDados.model;
 public enum Sorted {
 	ASC, DESC, NONE
 }
+
+// TODO: Criar uma classe abstrata Sorted com o intuito de generalizar a
+// ordenação para que possa reutilzar os métodos em qualquer tipo de Lista
+// Linear, seja ela Sequencial, Simplesmente Encadeada ou Duplamente Encadeada.
+// TODO: Enum statico chamado TypeSorted dentro de Sorted
