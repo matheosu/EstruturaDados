@@ -5,9 +5,8 @@ import java.lang.reflect.Array;
 
 import br.com.estruturaDados.model.exception.LinearSequencialException;
 import br.com.estruturaDados.model.interfaces.Linear;
-import br.com.estruturaDados.util.Compare;
 
-public class Sequencial<T> implements Linear<T>, Serializable {
+public class Sequencial<T> extends Sorted<T> implements Linear<T>, Serializable {
 	private static final long serialVersionUID = 7672934496211625736L;
 
 	/**
@@ -25,7 +24,7 @@ public class Sequencial<T> implements Linear<T>, Serializable {
 	/**
 	 * Pega a classe passada por reflexão
 	 */
-	protected Class<?> persistentClass;
+	protected Class<?> persistentClass = Object.class;
 
 	/**
 	 * Vetor da Lista
@@ -33,34 +32,29 @@ public class Sequencial<T> implements Linear<T>, Serializable {
 	private T[] elementData;
 
 	/**
-	 * Vetor de copia da Lista
+	 * Atributo que armazena qual é o tipo de ordenação atual da Lista
 	 */
-	private T[] copyElementData = null;
+	private TypeSorted tipoOrdenacao = TypeSorted.NONE;
 
 	/**
-	 * Atributo que armazena qual é a ordenação da Lista
+	 * Atributo que armazena qual é a ordem: crescente, decrescente ou nenhum;
 	 */
-	private Sorted ordenacao = Sorted.NONE;
+	private WaySorted ordem = WaySorted.NONE;
 
 	@SuppressWarnings("unchecked")
 	public Sequencial(int tamanhoInicial) throws LinearSequencialException {
-		if (reflection()) {
-			if (tamanhoInicial <= 0)
-				throw new LinearSequencialException(
-						"Tamanho inicial não pode ser menor ou igual 0");
-			this.elementData = (T[]) Array.newInstance(
-					this.getPersistentClass(), tamanhoInicial);
-		} else {
-			this.elementData = null;
-		}
-
+		if (tamanhoInicial <= 0)
+			throw new LinearSequencialException(
+					"Tamanho inicial não pode ser menor ou igual 0");
+		this.elementData = (T[]) Array.newInstance(this.getPersistentClass(),
+				tamanhoInicial);
 	}
 
 	@Override
 	public int findElement(T element) {
 		this.isEmpty();
 		for (int i = 0; i < this.qtdElements; i++) {
-			if (this.elementData[i].equals(element)){
+			if (this.elementData[i].equals(element)) {
 				return i;
 			}
 		}
@@ -98,7 +92,7 @@ public class Sequencial<T> implements Linear<T>, Serializable {
 		this.isEmpty();
 		int base = 0;
 		int topo = this.qtdElements;
-		if (this.ordenacao == Sorted.NONE)
+		if (this.tipoOrdenacao == TypeSorted.NONE)
 			throw new LinearSequencialException(
 					"Para a busca binária funcionar a lista tem que está ordenada!");
 
@@ -106,11 +100,11 @@ public class Sequencial<T> implements Linear<T>, Serializable {
 			int meio = (topo + base) / 2;
 			T e = this.get(meio);
 
-			if (e.equals(element)){
+			if (e.equals(element)) {
 				return meio;
 			}
 
-			if (topo == base){
+			if (topo == base) {
 				return -1;
 			}
 
@@ -176,54 +170,25 @@ public class Sequencial<T> implements Linear<T>, Serializable {
 		return false;
 	}
 
-	@Override
-	public void sort(Sorted s) {
-		this.ordenacao = s;
+	public void sort(TypeSorted ts, WaySorted ws) {
+		this.tipoOrdenacao = ts;
+		this.ordem = ws;
 
 		if (this.copyElementData == null)
-			this.copyListToCopy(elementData);
+			this.copyListToCopy(elementData, this.getPersistentClass());
 
-		switch (this.ordenacao) {
-		case ASC:
-			for (int i = 0; i < this.qtdElements; i++) {
-				for (int x = 0; x < this.qtdElements; x++) {
-					if (Compare.compare(this.elementData[i], this.elementData[x]) < 0) {
-						T aux = this.elementData[i];
-						this.elementData[i] = this.elementData[x];
-						this.elementData[x] = aux;
-					}
-				}
-			}
-			break;
-
-		case DESC:
-			for (int i = 0; i < this.qtdElements; i++) {
-				for (int x = 0; x < this.qtdElements; x++) {
-					if (Compare.compare(this.elementData[i], this.elementData[x]) > 0) {
-						T aux = this.elementData[x];
-						this.elementData[x] = this.elementData[i];
-						this.elementData[i] = aux;
-					}
-				}
-			}
-			break;
-
-		default:
-			this.copyListToData(this.copyElementData);
-			this.copyElementData = null;
-		}
-
+		this.elementData = super.sort(this.elementData, this.tipoOrdenacao,
+				this.ordem);
 	}
 
 	@Override
-	public Sorted getSort() {
-		return this.ordenacao;
+	public String getSort() {
+		return this.tipoOrdenacao.toString() + " - " + this.ordem.toString();
 	}
 
 	@Override
 	public String toString() {
 		String result = "";
-		String ordem = "";
 		String tipo = "";
 
 		for (int i = 0; i < this.qtdElements; i++) {
@@ -234,26 +199,17 @@ public class Sequencial<T> implements Linear<T>, Serializable {
 
 		}
 
-		if (this.getSort() == Sorted.DESC)
-			ordem = "Ordenação Decrescente";
-		else if (this.getSort() == Sorted.ASC)
-			ordem = "Ordenação Crescente";
-		else
-			ordem = "Sem ordenação";
-
 		tipo = this.getPersistentClass().getSimpleName();
 
-		return "Lista Linear Sequencial<" + tipo + "> (" + ordem + "):\n["
-				+ result + "]\n";
+		return "Lista Linear Sequencial<" + tipo + "> (" + this.getSort()
+				+ "):\n[" + result + "]\n";
 	}
 
 	/************************ Métodos da classe ******************************/
 
 	protected void organize() {
-		if (this.ordenacao == Sorted.ASC)
-			this.sort(Sorted.ASC);
-		else if (this.ordenacao == Sorted.DESC)
-			this.sort(Sorted.DESC);
+		this.elementData = super.sort(this.elementData, this.tipoOrdenacao,
+				this.ordem);
 	}
 
 	/**
@@ -292,35 +248,8 @@ public class Sequencial<T> implements Linear<T>, Serializable {
 		this.name = name;
 	}
 
-	protected boolean reflection() {
-		this.persistentClass = (Class<?>) this.getClass()
-				.getGenericSuperclass();
-		return true;
-	}
-
 	protected Class<?> getPersistentClass() {
 		return this.persistentClass;
-	}
-
-	/**
-	 * Método que faz cópia de cada elemento da lista original para a lista de
-	 * copia
-	 * 
-	 * @params original seria a lista que contém os elementos
-	 * @author matheuscastro
-	 */
-	@SuppressWarnings("unchecked")
-	protected void copyListToCopy(T[] original) {
-		if (this.copyElementData == null) {
-			this.copyElementData = (T[]) Array.newInstance(
-					this.getPersistentClass(), original.length);
-		}
-
-		for (int i = 0; i < original.length; i++) {
-			if (original[i] != null) {
-				this.copyElementData[i] = original[i];
-			}
-		}
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package br.com.estruturaDados.model.interfaces;
 
-import br.com.estruturaDados.model.Sorted;
+import br.com.estruturaDados.model.Sorted.TypeSorted;
+import br.com.estruturaDados.model.Sorted.WaySorted;
 import br.com.estruturaDados.model.exception.LinearException;
 
 /**
@@ -79,28 +80,8 @@ public interface Linear<T> {
 	 * @author matheuscastro
 	 */
 	public abstract int size();
-
-	/**
-	 * Método que ordena a lista, a classe que estiver sendo usada na lista deve
-	 * implementar o compareTo
-	 * 
-	 * @param s
-	 *            é o tipo de ordenação Ex.:
-	 * 
-	 *            <pre>
-	 * Sorted.ASC
-	 * </pre>
-	 * 
-	 *            <pre>
-	 * Sorted.DESC
-	 * </pre>
-	 * 
-	 *            <pre>
-	 * Sorted.NONE
-	 * </pre>
-	 * @author matheuscastro
-	 */
-	public abstract void sort(Sorted ordem);
+	
+	public abstract void sort(TypeSorted ts, WaySorted ws);
 
 	/**
 	 * Método que informa qual é a ordem atual da lista
@@ -121,7 +102,7 @@ public interface Linear<T> {
 	 * 
 	 * @author matheuscastro
 	 */
-	public abstract Sorted getSort();
+	public abstract String getSort();
 
 	// /**
 	// * Mé todo que reorganiza a lista;
