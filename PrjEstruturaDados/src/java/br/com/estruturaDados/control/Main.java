@@ -1,51 +1,46 @@
 package br.com.estruturaDados.control;
 
 import br.com.estruturaDados.model.Sequencial;
-import br.com.estruturaDados.model.Sorted.TypeSorted;
-import br.com.estruturaDados.model.Sorted.WaySorted;
+import br.com.estruturaDados.model.enums.TypeSorted;
+import br.com.estruturaDados.model.enums.WaySorted;
 import br.com.estruturaDados.model.interfaces.Linear;
 
 
 public class Main{
 	
 	public static void main(String[] args) {
-//		Linear<String> lista = new Sequencial<String>(15); 
+		Linear<String> lista = new Sequencial<String>(15); 
+		
+		lista.add("Bruna");
+		lista.add("Carlos");
+		lista.add("Amanda");
+		lista.add("Fernando");
+		lista.add("Jose");
+		lista.add("Alfredo");
+		lista.add("Pedro");
+		lista.add("Luis");
+		lista.add("Nathan");
+		lista.add("Marcos");
+		lista.add("Isabel");
+		lista.add("Gabriel");
+		System.out.println(lista);
+		
+		lista.sort(TypeSorted.SELECTION,WaySorted.ASC);
+		
+		System.out.println(lista);
+		
+//		Linear<Integer> inteiros = new Sequencial<Integer>(9);
 //		
-//		lista.addElement("Bruna");
-//		lista.addElement("Carlos");
-//		lista.addElement("Amanda");
-//		lista.addElement("Fernando");
-//		lista.addElement("Jose");
-//		lista.addElement("Alfredo");
-//		lista.addElement("Pedro");
-//		lista.addElement("Luis");
-//		lista.addElement("Nathan");
-//		lista.addElement("Marcos");
-//		lista.addElement("Isabel");
-//		lista.addElement("Gabriel");
-//		System.out.println(lista);
+//		inteiros.add(5);
+//		inteiros.add(3);
+//		inteiros.add(9);
+//		inteiros.add(7);
+//		inteiros.add(10);
+//		inteiros.add(2);
 //		
-//		lista.sort(Sorted.ASC);
-		
-		
-		Linear<Integer> inteiros = new Sequencial<Integer>(9);
-		
-		inteiros.addElement(5);
-		inteiros.addElement(3);
-		inteiros.addElement(9);
-		inteiros.addElement(7);
-		inteiros.addElement(10);
-		inteiros.addElement(2);
-		
-		System.out.println(inteiros);
-		
-		inteiros.sort(TypeSorted.INSERTION, WaySorted.DESC);
-		
-		inteiros.addElement(8);
-		inteiros.addElement(6);
-		
-		System.out.println(inteiros);
-		
+//		inteiros.sort(TypeSorted.BUBBLE, WaySorted.ASC);
+//		
+//		System.out.println(inteiros);
 		
 		
 		

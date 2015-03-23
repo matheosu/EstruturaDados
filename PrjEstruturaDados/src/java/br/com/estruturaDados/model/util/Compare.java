@@ -1,4 +1,4 @@
-package br.com.estruturaDados.util;
+package br.com.estruturaDados.model.util;
 
 import br.com.estruturaDados.model.exception.CompareException;
 

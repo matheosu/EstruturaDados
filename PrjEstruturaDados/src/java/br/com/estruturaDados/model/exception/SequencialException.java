@@ -1,10 +1,10 @@
 package br.com.estruturaDados.model.exception;
 
-public class LinearSequencialException extends LinearException{
+public class SequencialException extends LinearException{
 
 	private static final long serialVersionUID = -1423351104267564542L;
 	
-	public LinearSequencialException(String msg) {
+	public SequencialException(String msg) {
 		super("Sequencial]\n\t"+msg);
 	}
 }

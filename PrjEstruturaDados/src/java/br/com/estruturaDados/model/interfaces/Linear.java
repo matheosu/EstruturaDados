@@ -1,7 +1,7 @@
 package br.com.estruturaDados.model.interfaces;
 
-import br.com.estruturaDados.model.Sorted.TypeSorted;
-import br.com.estruturaDados.model.Sorted.WaySorted;
+import br.com.estruturaDados.model.enums.TypeSorted;
+import br.com.estruturaDados.model.enums.WaySorted;
 import br.com.estruturaDados.model.exception.LinearException;
 
 /**
@@ -27,7 +27,7 @@ public interface Linear<T> {
 	 * @throws LinearException
 	 *             Elemento não encontrado
 	 */
-	public abstract int findElement(T element) throws LinearException;
+	public abstract int find(T element) throws LinearException;
 
 	/**
 	 * Método que insere na lista um novo elemento passado por parametro;
@@ -38,7 +38,7 @@ public interface Linear<T> {
 	 *         falhas;
 	 * @author matheuscastro
 	 */
-	public abstract boolean addElement(T element);
+	public abstract boolean add(T element);
 
 	/**
 	 * Método que remove da lista o elemento passado por parametro;
@@ -49,7 +49,15 @@ public interface Linear<T> {
 	 *         falhas;
 	 * @author matheuscastro
 	 */
-	public abstract boolean removeElement(T element);
+	public abstract boolean remove(T element);
+	
+	/**
+	 * Método que retorna qual é o elemento através da posição informada por parametro;
+	 * @param pos posição do elemento dentro do array;
+	 * @return T é o elemento a ser retornado;
+	 * @author matheuscastro
+	 */
+	public abstract T get(int pos);
 
 	/**
 	 * Método que verifica se lista está vazia;
@@ -81,28 +89,20 @@ public interface Linear<T> {
 	 */
 	public abstract int size();
 	
-	public abstract void sort(TypeSorted ts, WaySorted ws);
-
 	/**
-	 * Método que informa qual é a ordem atual da lista
-	 * 
-	 * @return retorna um Sorted Ex.:
-	 * 
-	 *         <pre>
-	 * Sorted.ASC
-	 * </pre>
-	 * 
-	 *         <pre>
-	 * Sorted.DESC
-	 * </pre>
-	 * 
-	 *         <pre>
-	 * Sorted.NONE
-	 * </pre>
-	 * 
+	 * Ordenar
+	 * @param ts
+	 * @param ws
 	 * @author matheuscastro
 	 */
-	public abstract String getSort();
+	public abstract void sort(TypeSorted ts, WaySorted ws);
+
+//	/**
+//	 * Método que informa qual é a ordem atual da lista
+//	 * 
+//	 * @author matheuscastro
+//	 */
+//	public abstract String getSort();
 
 	// /**
 	// * Mé todo que reorganiza a lista;
