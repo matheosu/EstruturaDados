@@ -1,9 +1,7 @@
 package br.com.estruturaDados.control;
 
-import br.com.estruturaDados.model.Sequencial;
-import br.com.estruturaDados.model.enums.TypeSorted;
-import br.com.estruturaDados.model.enums.WaySorted;
-import br.com.estruturaDados.model.interfaces.Linear;
+import br.com.estruturaDados.model.manager.Queue;
+
 
 
 public class Main{
@@ -29,25 +27,50 @@ public class Main{
 //		
 //		System.out.println(lista);
 //		
-		Linear<Integer> inteiros = new Sequencial<Integer>(9);
+//		Linear<Integer> inteiros = new Sequencial<Integer>(9);
+//		
+//		inteiros.add(5);
+//		inteiros.add(3);
+//		inteiros.add(9);
+//		inteiros.add(7);
+//		inteiros.add(10);
+//		inteiros.add(2);
+//		System.out.println(inteiros);
+//		
+//		inteiros.sort(TypeSorted.BUBBLE, WaySorted.ASC);
+//		
+//		System.out.println(inteiros);
+//		
+//		inteiros.add(6);
+//		
+//		System.out.println(inteiros);
 		
-		inteiros.add(5);
-		inteiros.add(3);
-		inteiros.add(9);
-		inteiros.add(7);
-		inteiros.add(10);
-		inteiros.add(2);
-		System.out.println(inteiros);
 		
-		inteiros.sort(TypeSorted.BUBBLE, WaySorted.ASC);
+//		Stack<String> pilha = new Stack<String>(10);
+//		System.out.println(pilha.size());
+//		pilha.push("Teste1");
+//		pilha.push("Teste2");
+//		pilha.push("Teste3");
+//		pilha.push("Teste4");
+//		pilha.push("Teste5");
+//		pilha.push("Teste6");
+//		pilha.push("Teste7");
+//		pilha.push("Teste8");
+//		pilha.push("Teste9");
+//		pilha.push("Teste10");
+//		
+//		System.out.println(pilha);
+//		
+//		System.out.println(pilha.pop());
 		
-		System.out.println(inteiros);
+		Queue<String> fila = new Queue<String>(5);
+		fila.add("Teste1");
+		fila.add("Teste2");
+		fila.add("Teste3");
+		fila.add("Teste4");
+		fila.add("Teste5");
 		
-		inteiros.add(6);
-		
-		System.out.println(inteiros);
-		
-		
+		System.out.println(fila);
 	}
 
 }
