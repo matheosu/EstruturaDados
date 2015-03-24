@@ -24,14 +24,15 @@ public class Sequencial<T> extends Sorted<T> implements Linear<T>, Serializable 
 	private int qtdElements = 0;
 
 	/**
-	 * Pega a classe passada por reflexão
-	 */
-	protected Class<?> persistentClass = Object.class;
-
-	/**
 	 * Vetor da Lista
 	 */
 	private T[] elementData;
+
+	protected Class<?> persistentClass = Object.class;
+
+	protected TypeSorted tipoOrdenacao = TypeSorted.NONE;
+
+	protected WaySorted ordem = WaySorted.NONE;
 
 	@SuppressWarnings("unchecked")
 	public Sequencial(int tamanhoInicial) throws SequencialException {
@@ -60,7 +61,7 @@ public class Sequencial<T> extends Sorted<T> implements Linear<T>, Serializable 
 			throw new SequencialException("Posição menor que zero");
 		if (pos >= this.qtdElements)
 			throw new SequencialException("Posição não alocada");
-			
+
 		return this.elementData[pos];
 	}
 
@@ -79,9 +80,9 @@ public class Sequencial<T> extends Sorted<T> implements Linear<T>, Serializable 
 		this.isEmpty();
 		int base = 0;
 		int topo = this.qtdElements;
-//		if (this.tipoOrdenacao == TypeSorted.NONE)
-//			throw new SequencialException(
-//					"Para a busca binária funcionar a lista tem que está ordenada!");
+		// if (this.tipoOrdenacao == TypeSorted.NONE)
+		// throw new SequencialException(
+		// "Para a busca binária funcionar a lista tem que está ordenada!");
 
 		while (true) {
 			int meio = (topo + base) / 2;
@@ -114,11 +115,10 @@ public class Sequencial<T> extends Sorted<T> implements Linear<T>, Serializable 
 
 		this.isFull();
 		this.elementData[this.qtdElements] = element;
-
 		this.qtdElements += 1;
 		return true;
 	}
-
+	
 	@Override
 	public boolean remove(T element) throws SequencialException {
 		if (element == null)
@@ -155,13 +155,16 @@ public class Sequencial<T> extends Sorted<T> implements Linear<T>, Serializable 
 
 	@Override
 	public void sort(TypeSorted ts, WaySorted ws) {
-		this.elementData = super.sort(elementData, ts, ws);
+		this.tipoOrdenacao = ts;
+		this.ordem = ws;
+		this.elementData = super.sort(elementData, this.tipoOrdenacao,
+				this.ordem);
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = "";
-		String tipo = "";
+		String tipo = this.getPersistentClass().getSimpleName();
 
 		for (int i = 0; i < this.qtdElements; i++) {
 			result += this.elementData[i];
@@ -171,9 +174,9 @@ public class Sequencial<T> extends Sorted<T> implements Linear<T>, Serializable 
 
 		}
 
-		tipo = this.getPersistentClass().getSimpleName();
-
-		return "Lista Linear Sequencial<" + tipo + "> :\n[" + result + "]\n";
+		return "Lista Linear Sequencial<" + tipo + ">" 
+				+ " | " + tipoOrdenacao + " - " + ordem 
+				+ "\n[" + result + "]\n";
 	}
 
 	/************************ Métodos da classe ******************************/
@@ -217,25 +220,4 @@ public class Sequencial<T> extends Sorted<T> implements Linear<T>, Serializable 
 	protected Class<?> getPersistentClass() {
 		return this.persistentClass;
 	}
-
-//	/**
-//	 * Método que faz cópia de cada elemento da lista original para a lista de
-//	 * elementsData
-//	 * 
-//	 * @params original seria a lista que contém os elementos
-//	 * @author matheuscastro
-//	 */
-//	@SuppressWarnings("unchecked")
-//	protected void copyListToData(T[] original) {
-//		if (this.elementData == null) {
-//			this.elementData = (T[]) Array.newInstance(
-//					this.getPersistentClass(), original.length);
-//		}
-//
-//		for (int i = 0; i < original.length; i++) {
-//			if (original[i] != null) {
-//				this.elementData[i] = original[i];
-//			}
-//		}
-//	}
 }

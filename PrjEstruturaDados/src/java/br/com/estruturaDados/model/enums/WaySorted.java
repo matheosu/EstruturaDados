@@ -9,7 +9,8 @@ package br.com.estruturaDados.model.enums;
 public enum WaySorted {
 
 	ASC("Crescente"),
-	DESC("Decrescente");
+	DESC("Decrescente"),
+	NONE("Desordenado");
 	
 	private static final String ORDEM = "Ordem: ";
 	private final String nome;

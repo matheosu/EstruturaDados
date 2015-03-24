@@ -16,7 +16,8 @@ public enum TypeSorted {
 	BUBBLE ("Bolha"),
 	SELECTION ("Seleção"),
 	MERGE ("Junção"),
-	QUICK ("Rápida");
+	QUICK ("Rápida"),
+	NONE("Nenhum");
 	
 	private static final String ORDENACAO = "Tipo de Ordenação: ";
 	private final String nome;

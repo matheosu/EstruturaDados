@@ -11,8 +11,9 @@ public class Sorted<T> implements ISorted<T>{
 	private T[] elementData = null;
 	private int qtdElements = 0;
 
-	public T[] sort(T[] elementData, TypeSorted ts,WaySorted ws) {
-		this.count(elementData);
+	public T[] sort(T[] list, TypeSorted ts,WaySorted ws) {
+		this.elementData = list;
+		this.count(this.elementData);
 		
 		switch (ts) {
 		case HEAP:
@@ -46,7 +47,7 @@ public class Sorted<T> implements ISorted<T>{
 		return this.elementData;
 	}
 
-	protected void sortHeap(WaySorted ws) {
+	private void sortHeap(WaySorted ws) {
 		switch (ws) {
 		case ASC:
 			break;
@@ -56,7 +57,7 @@ public class Sorted<T> implements ISorted<T>{
 		}
 	}
 
-	protected void sortInsertion(WaySorted ws) {
+	private void sortInsertion(WaySorted ws) {
 		switch (ws) {
 		case ASC:
 			for (int i = 1; i <= this.qtdElements - 1; i++) {
@@ -88,7 +89,7 @@ public class Sorted<T> implements ISorted<T>{
 		}
 	}
 
-	protected void sortBubble(WaySorted ws) {
+	private void sortBubble(WaySorted ws) {
 		switch (ws) {
 		case ASC:
 			for (int i = 0; i < this.qtdElements; i++) {
@@ -118,7 +119,7 @@ public class Sorted<T> implements ISorted<T>{
 		}
 	}
 
-	protected void sortSelection(WaySorted ws) {
+	private void sortSelection(WaySorted ws) {
 		switch (ws) {
 		case ASC:
 			for(int i=0;i<this.qtdElements-2;i++){
@@ -162,7 +163,7 @@ public class Sorted<T> implements ISorted<T>{
 		}
 	}
 
-	protected void sortMerge(WaySorted ws) {
+	private void sortMerge(WaySorted ws) {
 		
 		switch (ws) {
 		case ASC:
@@ -176,7 +177,7 @@ public class Sorted<T> implements ISorted<T>{
 		
 	}
 
-	protected void sortQuick(WaySorted ws) {
+	private void sortQuick(WaySorted ws) {
 		switch (ws) {
 		case ASC:
 			break;
@@ -186,34 +187,10 @@ public class Sorted<T> implements ISorted<T>{
 		}
 	}
 	
-	protected void count(T[] list){
-		this.elementData = list;
+	private void count(T[] list){
 		for(int i=0; i<this.elementData.length;i++){
 			if(list[i]!=null)
 				this.qtdElements +=1;
 		}
 	}
-
-//	/**
-//	 * Método que faz cópia de cada elemento da lista original para a lista de
-//	 * copia
-//	 * 
-//	 * @params original seria a lista que contém os elementos
-//	 * @author matheuscastro
-//	 */
-//	@SuppressWarnings("unchecked")
-//	protected void copyListToCopy(T[] original, Class<?> tipo) {
-//		this.tipo = tipo;
-//		if (this.copyElementData == null) {
-//			this.copyElementData = (T[]) Array.newInstance(this.tipo,
-//					original.length);
-//		}
-//
-//		for (int i = 0; i < original.length; i++) {
-//			if (original[i] != null) {
-//				this.copyElementData[i] = original[i];
-//			}
-//		}
-//	}
-
 }
