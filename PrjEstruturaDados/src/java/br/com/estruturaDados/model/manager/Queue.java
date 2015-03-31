@@ -57,8 +57,6 @@ public class Queue<T> {
 	
 	public String toString(){
 		String result="";
-		
-		
 		return "Queue: [" + result + "]";
 	}
 	

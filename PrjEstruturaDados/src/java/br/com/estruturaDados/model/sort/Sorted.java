@@ -1,48 +1,51 @@
-package br.com.estruturaDados.model;
+package br.com.estruturaDados.model.sort;
 
 import br.com.estruturaDados.model.enums.TypeSorted;
 import br.com.estruturaDados.model.enums.WaySorted;
 import br.com.estruturaDados.model.interfaces.ISorted;
 import br.com.estruturaDados.model.util.Compare;
 
-public class Sorted<T> implements ISorted<T>{
-	
+public class Sorted<T> implements ISorted<T> {
 
 	private T[] elementData = null;
-	private int qtdElements = 0;
+	private int qtdElements;
 
-	public T[] sort(T[] list, TypeSorted ts,WaySorted ws) {
+	public T[] sort(T[] list, TypeSorted ts, WaySorted ws) {
+		this.qtdElements = 0;
 		this.elementData = list;
 		this.count(this.elementData);
+
+		if (this.verifySort(ws))
+			return list;
 		
-		switch (ts) {
-		case HEAP:
-			this.sortHeap(ws);
-			break;
+			switch (ts) {
+			case HEAP:
+				this.sortHeap(ws);
+				break;
 
-		case INSERTION:
-			this.sortInsertion(ws);
-			break;
+			case INSERTION:
+				this.sortInsertion(ws);
+				break;
 
-		case BUBBLE:
-			this.sortBubble(ws);
-			break;
+			case BUBBLE:
+				this.sortBubble(ws);
+				break;
 
-		case SELECTION:
-			this.sortSelection(ws);
-			break;
+			case SELECTION:
+				this.sortSelection(ws);
+				break;
 
-		case MERGE:
-			this.sortMerge(ws);
-			break;
+			case MERGE:
+				this.sortMerge(ws);
+				break;
 
-		case QUICK:
-			this.sortQuick(ws);
-			break;
+			case QUICK:
+				this.sortQuick(ws);
+				break;
 
-		default:
-			break;
-		}
+			default:
+				break;
+			}
 
 		return this.elementData;
 	}
@@ -122,38 +125,38 @@ public class Sorted<T> implements ISorted<T>{
 	private void sortSelection(WaySorted ws) {
 		switch (ws) {
 		case ASC:
-			for(int i=0;i<this.qtdElements-2;i++){
+			for (int i = 0; i < this.qtdElements - 2; i++) {
 				T eleito = this.elementData[i];
-				T menor = this.elementData[i+1];
-				int pos = i+1;
-				
-				for(int j=i+2;j<=this.qtdElements-1;j++){
-					if(Compare.compare(this.elementData[j],menor)<0){
+				T menor = this.elementData[i + 1];
+				int pos = i + 1;
+
+				for (int j = i + 2; j <= this.qtdElements - 1; j++) {
+					if (Compare.compare(this.elementData[j], menor) < 0) {
 						menor = this.elementData[j];
 						pos = j;
 					}
 				}
-				
-				if(Compare.compare(menor,eleito)<0){
+
+				if (Compare.compare(menor, eleito) < 0) {
 					this.elementData[i] = this.elementData[pos];
 					this.elementData[pos] = eleito;
 				}
 			}
 			break;
 		case DESC:
-			for(int i=0;i<this.qtdElements-2;i++){
+			for (int i = 0; i < this.qtdElements - 2; i++) {
 				T eleito = this.elementData[i];
-				T menor = this.elementData[i+1];
-				int pos = i+1;
-				
-				for(int j=i+2;j<=this.qtdElements-1;j++){
-					if(Compare.compare(this.elementData[j],menor)>0){
+				T menor = this.elementData[i + 1];
+				int pos = i + 1;
+
+				for (int j = i + 2; j <= this.qtdElements - 1; j++) {
+					if (Compare.compare(this.elementData[j], menor) > 0) {
 						menor = this.elementData[j];
 						pos = j;
 					}
 				}
-				
-				if(Compare.compare(menor,eleito)>0){
+
+				if (Compare.compare(menor, eleito) > 0) {
 					this.elementData[i] = this.elementData[pos];
 					this.elementData[pos] = eleito;
 				}
@@ -163,18 +166,21 @@ public class Sorted<T> implements ISorted<T>{
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private void sortMerge(WaySorted ws) {
-		
+
 		switch (ws) {
 		case ASC:
-			
+			this.elementData = (T[]) Merge.merge(this.elementData, 0,
+					this.qtdElements - 1, ws);
 			break;
 		case DESC:
+			this.elementData = (T[]) Merge.merge(this.elementData, 0,
+					this.qtdElements - 1, ws);
 			break;
 		default:
 		}
-	
-		
+
 	}
 
 	private void sortQuick(WaySorted ws) {
@@ -186,11 +192,37 @@ public class Sorted<T> implements ISorted<T>{
 		default:
 		}
 	}
-	
-	private void count(T[] list){
-		for(int i=0; i<this.elementData.length;i++){
-			if(list[i]!=null)
-				this.qtdElements +=1;
+
+	private void count(T[] list) {
+		for (int i = 0; i < this.elementData.length; i++) {
+			if (list[i] != null)
+				this.qtdElements += 1;
 		}
 	}
+
+	private boolean verifySort(final WaySorted ws) {
+		int i = 0;
+		switch (ws) {
+		case ASC:
+			for (i = 0; i < this.qtdElements-1; i++) {
+				if (!(Compare.compare(this.elementData[i],
+						this.elementData[i + 1]) < 1)) {
+					return false;
+				}
+			}
+			return true;
+		case DESC:
+			for (i = 0; i < this.qtdElements-1; i++) {
+				if (!(Compare.compare(this.elementData[i],
+						this.elementData[i + 1]) > 1)) {
+					return false;
+				}
+			}
+			return true;
+		default:
+			return false;
+		}
+
+	}
+
 }

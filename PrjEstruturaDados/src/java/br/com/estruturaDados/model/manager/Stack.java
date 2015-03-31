@@ -1,6 +1,7 @@
 package br.com.estruturaDados.model.manager;
 
 import br.com.estruturaDados.model.exception.StackExcpetion;
+import br.com.estruturaDados.model.util.Compare;
 
 public class Stack<T> {
 
@@ -47,17 +48,45 @@ public class Stack<T> {
 	}
 
 	public String toString() {
-		String result = "";
+		String result = "\n";
 		if (!isEmpty()) {
-			//TODO implementar
-			//desempilha em ordem contrária
-			//empilha de volta
-			//se vira
-			return "Stack [" + result + "]";
+			Object[] aux;
+			int tamanho = topo + 1;
+			aux = new Object[tamanho];
+			for (int i = 0; i < tamanho; i++) {
+				result += lista[topo];
+				if (!(topo % 1 == 1)) {
+					result += "\n";
+				}
+				aux[i] = lista[topo--];
+			}
+			for (int i = tamanho - 1; i > -1; i--) {
+				lista[++topo] = aux[i];
+			}
 		}
-		
-		return result;
+		return "\nStack\n" + "_______________" + result + "_______________";
 	}
-	
-	//TODO: Implementar um método de busca;
+
+	public int find(T element) {
+		int result = -1;
+		int tamanho = topo + 1;
+		Object[] aux;
+		aux = new Object[tamanho];
+
+		for (int i = 0; i < tamanho; i++) {
+			if (Compare.compare(lista[topo], element) == 0)
+				result = topo;
+			aux[i] = lista[topo--];
+		}
+
+		for (int i = tamanho - 1; i > -1; i--) {
+			lista[++topo] = aux[i];
+		}
+
+		if (result > -1)
+			return result;
+		throw new StackExcpetion("Elemento não encontrado");
+
+	}
+
 }

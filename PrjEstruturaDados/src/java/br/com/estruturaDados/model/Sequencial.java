@@ -7,6 +7,7 @@ import br.com.estruturaDados.model.enums.TypeSorted;
 import br.com.estruturaDados.model.enums.WaySorted;
 import br.com.estruturaDados.model.exception.SequencialException;
 import br.com.estruturaDados.model.interfaces.Linear;
+import br.com.estruturaDados.model.sort.Sorted;
 
 public class Sequencial<T> extends Sorted<T> implements Linear<T>, Serializable {
 	private static final long serialVersionUID = 7672934496211625736L;
