@@ -55,8 +55,20 @@ public class Queue<T> {
 		return this.queue.length;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String toString(){
 		String result="";
+		if(!isEmpty()){
+			Object[] aux = new Object[this.size()];
+			for(int i=0; i< this.size();i++){
+				aux[i] = remove();
+				result += aux[i]; 
+			}
+			
+			for(int i = this.size()-1; i>-1;i-- ){
+				add((T) aux[i]);
+			}
+		}
 		return "Queue: [" + result + "]";
 	}
 	

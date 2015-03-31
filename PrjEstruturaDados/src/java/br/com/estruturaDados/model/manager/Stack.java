@@ -6,15 +6,15 @@ import br.com.estruturaDados.model.util.Compare;
 public class Stack<T> {
 
 	private int topo = -1;
-	private Object[] lista;
+	private Object[] stack;
 
 	public Stack(int capacidade) {
-		lista = new Object[capacidade];
+		stack = new Object[capacidade];
 	}
 
 	public void push(T element) {
 		if (!isFull())
-			lista[++topo] = element;
+			stack[++topo] = element;
 
 	}
 
@@ -22,7 +22,7 @@ public class Stack<T> {
 	public T pop() {
 		Object element = null;
 		if (!isEmpty()) {
-			element = lista[topo];
+			element = stack[topo];
 			topo--;
 			return (T) element;
 		}
@@ -44,9 +44,10 @@ public class Stack<T> {
 	}
 
 	public int size() {
-		return this.lista.length;
+		return this.stack.length;
 	}
 
+	@SuppressWarnings("unchecked")
 	public String toString() {
 		String result = "\n";
 		if (!isEmpty()) {
@@ -54,19 +55,20 @@ public class Stack<T> {
 			int tamanho = topo + 1;
 			aux = new Object[tamanho];
 			for (int i = 0; i < tamanho; i++) {
-				result += lista[topo];
+				result += stack[topo];
 				if (!(topo % 1 == 1)) {
 					result += "\n";
 				}
-				aux[i] = lista[topo--];
+				aux[i] = pop();
 			}
 			for (int i = tamanho - 1; i > -1; i--) {
-				lista[++topo] = aux[i];
+				push((T) aux[i]);
 			}
 		}
 		return "\nStack\n" + "_______________" + result + "_______________";
 	}
 
+	@SuppressWarnings("unchecked")
 	public int find(T element) {
 		int result = -1;
 		int tamanho = topo + 1;
@@ -74,13 +76,13 @@ public class Stack<T> {
 		aux = new Object[tamanho];
 
 		for (int i = 0; i < tamanho; i++) {
-			if (Compare.compare(lista[topo], element) == 0)
+			if (Compare.compare(stack[topo], element) == 0)
 				result = topo;
-			aux[i] = lista[topo--];
+			aux[i] = pop();
 		}
 
 		for (int i = tamanho - 1; i > -1; i--) {
-			lista[++topo] = aux[i];
+			push((T) aux[i]);
 		}
 
 		if (result > -1)
